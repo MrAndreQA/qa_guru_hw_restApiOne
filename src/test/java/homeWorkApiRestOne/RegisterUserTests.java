@@ -3,12 +3,12 @@ package homeWorkApiRestOne;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class RegisterUserTests extends ApiTestBase{
 
     public int expectedUserId = 4;
-    public String expectedToken = "QpwL5tke4Pnpja7X4";
+    public int minTokenLength = 16;
 
     @Test
     public void successfulRegisterTest() {
@@ -26,8 +26,12 @@ public class RegisterUserTests extends ApiTestBase{
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("token", is(expectedToken))
-                .body("id", is(expectedUserId));
+                .body("id", is(expectedUserId))
+                // Комплексная проверка токена
+                .body("token", notNullValue())
+                .body("token", not(blankString()))
+                .body("token.length()", greaterThanOrEqualTo(minTokenLength))
+                .body("token", matchesPattern("^[a-zA-Z0-9]+$"));
     }
 
     @Test

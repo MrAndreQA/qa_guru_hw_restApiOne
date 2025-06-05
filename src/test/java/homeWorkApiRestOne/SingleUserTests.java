@@ -1,7 +1,5 @@
 package homeWorkApiRestOne;
 
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,10 +11,6 @@ public class SingleUserTests extends ApiTestBase {
     public int notValidUserId = 999;
     public String expectedEmail = "janet.weaver@reqres.in";
 
-    @BeforeAll
-    static void setup() {
-        RestAssured.baseURI = "https://reqres.in/api/";
-    }
 
     @Test
     public void successfulReceivingSingleUserDataTest() {
