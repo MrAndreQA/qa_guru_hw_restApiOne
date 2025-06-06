@@ -5,11 +5,13 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class ApiTestBase {
 
-    public String registerEndpoint = "/api/register";
+    public String registerEndpoint = "/register";
     public String apiKey = "reqres-free-v1";
-    public String usersEndpoint = "/api/users/";
+    public String usersEndpoint = "/users/";
 
     @BeforeAll
     static void setup() {
-        RestAssured.baseURI = "https://reqres.in"; }
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api";
+    }
 }
