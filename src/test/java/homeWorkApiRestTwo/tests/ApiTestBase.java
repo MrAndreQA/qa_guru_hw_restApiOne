@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.completedTask.tests;
+package homeWorkApiRestTwo.tests;
 
 public class ApiTestBase {
 

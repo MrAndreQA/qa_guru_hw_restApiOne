@@ -1,18 +1,18 @@
-package homeWorkApiRestTwo.completedTask.specs;
+package homeWorkApiRestTwo.specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import static homeWorkApiRestTwo.completedTask.tests.ApiTestBase.*;
-import static homeWorkApiRestTwo.fromLesson.helpers.CustomAllureListener.withCustomTemplates;
+import static homeWorkApiRestTwo.helpers.CustomAllureListener.withCustomTemplates;
+import static homeWorkApiRestTwo.tests.ApiTestBase.*;
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.http.ContentType.JSON;
 
-public class SingleUserSpec {
+public class RegisterSpec {
 
-    public static RequestSpecification singleUserRequestSpec = with()
+    public static RequestSpecification registerRequestSpec = with()
             .filter(withCustomTemplates())
             .log().uri()
             .log().body()
@@ -20,16 +20,16 @@ public class SingleUserSpec {
             .header("x-api-key", API_KEY)
             .contentType(JSON)
             .baseUri(BASE_URI)
-            .basePath(SINGLE_USER_PATH + "{userId}");
+            .basePath(REGISTER_PATH);
 
-    public static ResponseSpecification singleUserResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification registerResponseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .log(STATUS)
             .log(BODY)
             .build();
 
-    public static ResponseSpecification notFoundInSingleUserResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(404)
+    public static ResponseSpecification missingPasswordInRegisterResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(400)
             .log(STATUS)
             .log(BODY)
             .build();

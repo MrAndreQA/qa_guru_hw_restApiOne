@@ -1,8 +1,8 @@
-package homeWorkApiRestTwo.completedTask.tests;
+package homeWorkApiRestTwo.tests;
 
-import homeWorkApiRestTwo.completedTask.models.singleUser.SingleUserResponseModel;
+import homeWorkApiRestTwo.models.singleUser.SingleUserResponseModel;
 import org.junit.jupiter.api.Test;
-import static homeWorkApiRestTwo.completedTask.specs.SingleUserSpec.*;
+import static homeWorkApiRestTwo.specs.SingleUserSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;

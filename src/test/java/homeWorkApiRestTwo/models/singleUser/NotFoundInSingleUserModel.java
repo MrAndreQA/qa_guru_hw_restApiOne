@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.completedTask.models.singleUser;
+package homeWorkApiRestTwo.models.singleUser;
 
 import lombok.Data;
 

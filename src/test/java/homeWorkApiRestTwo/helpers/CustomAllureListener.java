@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.completedTask.helpers;
+package homeWorkApiRestTwo.helpers;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 
