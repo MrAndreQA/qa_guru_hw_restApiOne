@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "Api - автотесты, урок № 2",
+    "environment": "",
+    "comment": "",
+    "reportLink": "",
+    "language": "ru",
+    "allureFolder": "",
+    "enableChart": true
+    },
+    "telegram": {
+      "token": "",
+      "chat": "",
+      "replyTo": ""
+    }
+  }

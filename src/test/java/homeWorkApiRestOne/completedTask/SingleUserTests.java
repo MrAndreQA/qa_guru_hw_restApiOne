@@ -1,4 +1,4 @@
-package homeWorkApiRestOne;
+package homeWorkApiRestOne.completedTask;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;

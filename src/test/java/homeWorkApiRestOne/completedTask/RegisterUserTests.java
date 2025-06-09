@@ -1,4 +1,4 @@
-package homeWorkApiRestOne;
+package homeWorkApiRestOne.completedTask;
 
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
