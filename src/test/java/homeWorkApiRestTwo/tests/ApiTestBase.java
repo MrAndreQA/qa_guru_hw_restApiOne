@@ -1,9 +1,17 @@
 package homeWorkApiRestTwo.tests;
 
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
+
 public class ApiTestBase {
 
     public static final String API_KEY = "reqres-free-v1";
-    public static final String BASE_URI = "https://reqres.in";
-    public static String REGISTER_PATH = "/api/register";
-    public static String SINGLE_USER_PATH = "/api/users/";
+    public static String REGISTER_ENDPOINT = "/register";
+    public static String USERS_ENDPOINT = "/users/";
+
+    @BeforeAll
+    static void beforeAll() {
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api";
+    }
 }

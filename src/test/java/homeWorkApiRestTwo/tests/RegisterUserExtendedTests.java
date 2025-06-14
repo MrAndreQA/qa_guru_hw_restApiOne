@@ -4,12 +4,13 @@ import homeWorkApiRestTwo.models.register.RegisterBodyModel;
 import homeWorkApiRestTwo.models.register.RegisterResponseModel;
 import homeWorkApiRestTwo.models.register.MissingPasswordInRegisterModel;
 import org.junit.jupiter.api.Test;
-import static homeWorkApiRestTwo.specs.RegisterSpec.*;
+import static homeWorkApiRestTwo.specs.BaseSpec.*;
+import static homeWorkApiRestTwo.specs.BaseSpec.requestSpec;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RegisterUserExtendedTests {
+public class RegisterUserExtendedTests extends ApiTestBase {
 
     public int minTokenLength = 16;
 
@@ -20,19 +21,18 @@ public class RegisterUserExtendedTests {
         registerData.setPassword("cityslicka");
 
         RegisterResponseModel response = step("Make request", ()->
-                given(registerRequestSpec)
+                given(requestSpec)
                         .body(registerData)
 
                         .when()
-                        .post()
+                        .post(REGISTER_ENDPOINT)
 
                         .then()
-                        .spec(registerResponseSpec)
+                        .spec(responseSpec(200))
                         .extract().as(RegisterResponseModel.class));
 
         step("Check response", () -> {
             String token = response.getToken();
-
             assertThat(token)
                     .as("Token should not be null")
                     .isNotNull()
@@ -45,20 +45,17 @@ public class RegisterUserExtendedTests {
         });
     }
 
-
     @Test
     void missingPasswordRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
         registerData.setEmail("eve.holt@reqres.in");
-
         MissingPasswordInRegisterModel response = step("Make request", () ->
-                given(registerRequestSpec)
+                given(requestSpec)
                         .body(registerData)
-                        .post()
+                        .post(REGISTER_ENDPOINT)
                         .then()
-                        .spec(missingPasswordInRegisterResponseSpec)
+                        .spec(responseSpec(400))
                         .extract().as(MissingPasswordInRegisterModel.class));
-
         step("Check response", () ->
                 assertThat(response.getError())
                         .as("Check error message for missing password")
@@ -66,20 +63,17 @@ public class RegisterUserExtendedTests {
         );
     }
 
-
     @Test
     void missingEmailRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
         registerData.setPassword("cityslicka");
-
         MissingPasswordInRegisterModel response = step("Make request", () ->
-                given(registerRequestSpec)
+                given(requestSpec)
                         .body(registerData)
-                        .post()
+                        .post(REGISTER_ENDPOINT)
                         .then()
-                        .spec(missingPasswordInRegisterResponseSpec)
+                        .spec(responseSpec(400))
                         .extract().as(MissingPasswordInRegisterModel.class));
-
         step("Check response", () ->
                 assertThat(response.getError())
                         .as("Check error message for missing email")
