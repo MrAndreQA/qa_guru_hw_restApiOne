@@ -37,7 +37,6 @@ dependencies {
             'org.assertj:assertj-core:3.24.2',
 
             'com.codeborne:selenide:6.19.1',
-
             'io.qameta.allure:allure-selenide:2.21.0',
 
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
@@ -60,4 +59,11 @@ tasks.withType(Test) {
             exceptionFormat "short"
         }
     }
+}
+
+task reqres_in(type: Test) {
+    useJUnitPlatform {
+        includeTags("reqres_in")
+    }
+    systemProperty "file.encoding", "UTF-8"
 }
