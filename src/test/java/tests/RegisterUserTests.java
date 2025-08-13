@@ -1,24 +1,35 @@
-package homeWorkApiRestTwo.tests;
+package tests;
 
-import homeWorkApiRestTwo.models.register.RegisterBodyModel;
-import homeWorkApiRestTwo.models.register.RegisterResponseModel;
-import homeWorkApiRestTwo.models.register.MissingPasswordInRegisterModel;
+import models.register.RegisterBodyModel;
+import models.register.RegisterResponseModel;
+import models.register.MissingPasswordInRegisterModel;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static homeWorkApiRestTwo.specs.BaseSpec.*;
-import static homeWorkApiRestTwo.specs.BaseSpec.requestSpec;
+
+import static specs.BaseSpecRestApi.requestSpec;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static specs.BaseSpecRestApi.responseSpec;
 
-public class RegisterUserExtendedTests extends ApiTestBase {
+@DisplayName("Reqres.in - регистрация пользователя")
+@Tag("reqres_in")
+@Feature("Reqres.in тесты: Регистрация нового пользователя")
+@Story("Тестирование api сайта: Reqres.in")
+@Owner("Volodin_AS")
+public class RegisterUserTests extends ApiTestBase {
 
     public int minTokenLength = 16;
 
     @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Post - Single user: Успешная регистрация нового пользователя")
     void successfulRegisterWithSpecsTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
-        registerData.setEmail("eve.holt@reqres.in");
-        registerData.setPassword("cityslicka");
+        registerData.setEmail(USER_EMAIL);
+        registerData.setPassword(USER_PASSWORD);
 
         RegisterResponseModel response = step("Make request", ()->
                 given(requestSpec)
@@ -46,9 +57,11 @@ public class RegisterUserExtendedTests extends ApiTestBase {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Post - Single user: Попытка регистрации пользователя - без указания пароля")
     void missingPasswordRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
-        registerData.setEmail("eve.holt@reqres.in");
+        registerData.setEmail(USER_EMAIL);
         MissingPasswordInRegisterModel response = step("Make request", () ->
                 given(requestSpec)
                         .body(registerData)
@@ -64,9 +77,11 @@ public class RegisterUserExtendedTests extends ApiTestBase {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Post - Single user: Попытка регистрации пользователя - без указания email")
     void missingEmailRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
-        registerData.setPassword("cityslicka");
+        registerData.setPassword(USER_EMAIL);
         MissingPasswordInRegisterModel response = step("Make request", () ->
                 given(requestSpec)
                         .body(registerData)

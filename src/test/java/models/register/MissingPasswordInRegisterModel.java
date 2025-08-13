@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.models.register;
+package models.register;
 
 import lombok.Data;
 

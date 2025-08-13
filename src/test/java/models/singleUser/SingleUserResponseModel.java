@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.models.singleUser;
+package models.singleUser;
 
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;

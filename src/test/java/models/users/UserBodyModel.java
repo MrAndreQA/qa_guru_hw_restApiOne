@@ -1,4 +1,4 @@
-package homeWorkApiRestTwo.models.users;
+package models.users;
 
 import lombok.Data;
 

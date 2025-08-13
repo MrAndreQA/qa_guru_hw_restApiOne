@@ -36,16 +36,23 @@ dependencies {
             'org.slf4j:slf4j-simple:2.0.9',
             'org.assertj:assertj-core:3.24.2',
 
+            'com.codeborne:selenide:6.19.1',
+
+            'io.qameta.allure:allure-selenide:2.21.0',
+
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion",
             "com.fasterxml.jackson.core:jackson-core:$jacksonVersion",
-            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion",
+            "org.aeonbits.owner:owner:1.0.4",
+            "org.selenide:selenide-selenoid:2.3.4"
     )
 }
 
 tasks.withType(Test) {
     useJUnitPlatform()
     systemProperty "file.encoding", "UTF-8"
+    systemProperties(System.getProperties())
 
     testLogging {
         lifecycle {

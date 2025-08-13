@@ -1,14 +1,22 @@
-package homeWorkApiRestTwo.tests;
+package tests;
 
-import homeWorkApiRestTwo.models.singleUser.SingleUserResponseModel;
+import models.singleUser.SingleUserResponseModel;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static homeWorkApiRestTwo.specs.BaseSpec.requestSpec;
-import static homeWorkApiRestTwo.specs.BaseSpec.responseSpec;
+import static specs.BaseSpecRestApi.requestSpec;
+import static specs.BaseSpecRestApi.responseSpec;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SingleUserExtendedTests extends ApiTestBase {
+@DisplayName("Reqres.in - поиск пользователя")
+@Tag("reqres_in")
+@Feature("Reqres.in тесты: Поиск зарегистрированного пользователя")
+@Story("Тестирование api сайта: Reqres.in")
+@Owner("Volodin_AS")
+public class SingleUserTests extends ApiTestBase {
 
     public int validUserId = 2;
     public int notValidUserId = 999;
@@ -16,6 +24,8 @@ public class SingleUserExtendedTests extends ApiTestBase {
 
 
     @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Get - Single user: Поиск уже зарегистрированного пользователя")
     void successfulReceivingSingleUserDataTest() {
         SingleUserResponseModel userResponse = step("Make request", () ->
                 given(requestSpec)
@@ -43,6 +53,8 @@ public class SingleUserExtendedTests extends ApiTestBase {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Get - Single user: Поиск пользователя - при указании несуществующего UserId")
     public void singleUserNotFoundTest() {
         String responseBody = step("Make request", () ->
                 given(requestSpec)
