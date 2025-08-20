@@ -23,9 +23,9 @@ public class PutPatchDeleteTests extends ApiTestBase {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Delete - Single user: Успешное удаление пользователя")
+    @DisplayName("Метод Delete: Успешное удаление пользователя")
     void successfulDeleteUserTest() {
-        step("Make request: Delete User and check status code", () ->
+        step("Отправка запроса: удаление пользователя и проверка кода ответа", () ->
                 given(requestSpec)
                         .pathParam("userId", validUserId)
                 .when()
@@ -37,13 +37,13 @@ public class PutPatchDeleteTests extends ApiTestBase {
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("PUT - Single user: Успешное изменение данных о пользователе")
+    @DisplayName("Метод PUT: Успешное изменение данных о пользователе")
     void successfulPutUserTest() {
         UserBodyModel userPutData = new UserBodyModel();
         userPutData.setName("Afina");
         userPutData.setJob("Queen");
 
-        UserResponseModel response = step("Make Put request", () ->
+        UserResponseModel response = step("Отправка Put запроса", () ->
                 given(requestSpec)
                         .pathParam("userId", validUserId)
                         .body(userPutData)
@@ -54,33 +54,32 @@ public class PutPatchDeleteTests extends ApiTestBase {
                         .then()
                         .spec(responseSpec(200))
                         .extract().as(UserResponseModel.class));
-        step("Check Name in response body", () ->
+        step("Проверка параметра 'Name' в теле ответа", () ->
                 assertThat(response.getName())
-                        .as("Check Name")
+                        .as("Проверка параметра Name")
                         .isEqualTo(userPutData.getName())
         );
-        step("Check Job in response body", () ->
+        step("Проверка параметра 'Job' в теле ответа", () ->
                 assertThat(response.getJob())
-                        .as("Check Name")
+                        .as("Проверка параметра Job")
                         .isEqualTo(userPutData.getJob())
         );
-        step("Check updatedAt timestamp", () -> {
-            // Проверяем, что поле существует
+        step("Проверка параметра 'updatedAt' в теле ответа", () -> {
             assertThat(response.getUpdatedAt())
-                    .as("updatedAt should not be null")
+                    .as("Параметр 'updatedAt' не должен быть равен null")
                     .isNotNull();
         });
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("PATCH - Single user: Успешное изменение данных о пользователе")
+    @DisplayName("Метод PATCH: Успешное изменение данных о пользователе")
     void successfulPatchUserTest() {
         UserBodyModel userPatchData = new UserBodyModel();
         userPatchData.setName("James");
         userPatchData.setJob("Cleaner");
 
-        UserResponseModel patchResponse = step("Make Patch request", () ->
+        UserResponseModel patchResponse = step("Отправка Patch запроса", () ->
                 given(requestSpec)
                         .pathParam("userId", validUserId)
                         .body(userPatchData)
@@ -91,19 +90,19 @@ public class PutPatchDeleteTests extends ApiTestBase {
                         .then()
                         .spec(responseSpec(200))
                         .extract().as(UserResponseModel.class));
-        step("Check Name in response body", () ->
+        step("Проверка параметра 'Name' в теле ответа", () ->
                 assertThat(patchResponse.getName())
-                        .as("Check Name")
+                        .as("Проверка параметра Name")
                         .isEqualTo(userPatchData.getName())
         );
-        step("Check Job in response body", () ->
+        step("Проверка параметра 'Job' в теле ответа", () ->
                 assertThat(patchResponse.getJob())
-                        .as("Check Name")
+                        .as("Проверка параметра Job")
                         .isEqualTo(userPatchData.getJob())
         );
-        step("Check updatedAt timestamp", () -> {
+        step("Проверка параметра 'updatedAt' в теле ответа", () -> {
             assertThat(patchResponse.getUpdatedAt())
-                    .as("updatedAt should not be null")
+                    .as("Параметр 'updatedAt' не должен быть равен null")
                     .isNotNull();
         });
     }

@@ -11,7 +11,7 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Reqres.in - поиск пользователя")
+@DisplayName("ReqresIn - Тесты на поиск пользователя")
 @Tag("reqres_in")
 @Feature("Reqres.in тесты: Поиск зарегистрированного пользователя")
 @Story("Тестирование api сайта: Reqres.in")
@@ -25,9 +25,9 @@ public class SingleUserTests extends ApiTestBase {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @DisplayName("Get - Single user: Поиск уже зарегистрированного пользователя")
+    @DisplayName("Метод Get: Поиск уже зарегистрированного пользователя")
     void successfulReceivingSingleUserDataTest() {
-        SingleUserResponseModel userResponse = step("Make request", () ->
+        SingleUserResponseModel userResponse = step("Отправляем запрос", () ->
                 given(requestSpec)
                         .pathParam("userId", validUserId)
                 .when()
@@ -36,17 +36,17 @@ public class SingleUserTests extends ApiTestBase {
                 .then()
                         .spec(responseSpec(200))
                         .extract().as(SingleUserResponseModel.class));
-        step("Check Id in response", () -> {
+        step("Проверяем Id в ответе", () -> {
             Integer id = userResponse.getData().getId();
             assertThat(id)
-                    .as("Id should not be null and must match request")
+                    .as("Id не должен быть null и должен соответствовать ожидаемому")
                     .isNotNull()
                     .isEqualTo(validUserId);
         });
-        step("Check email in response", () -> {
+        step("Проверяем email в ответе", () -> {
             String email = userResponse.getData().getEmail();
             assertThat(email)
-                    .as("Email should not be null and must match expected")
+                    .as("Email не должен быть null и должен соответствовать ожидаемому")
                     .isNotNull()
                     .isEqualTo(expectedEmail);
         });
@@ -54,9 +54,9 @@ public class SingleUserTests extends ApiTestBase {
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Get - Single user: Поиск пользователя - при указании несуществующего UserId")
+    @DisplayName("Метод Get: Поиск пользователя - при указании несуществующего UserId")
     public void singleUserNotFoundTest() {
-        String responseBody = step("Make request", () ->
+        String responseBody = step("Отправляем запрос", () ->
                 given(requestSpec)
                         .pathParam("userId", notValidUserId)
                         .when()
@@ -68,9 +68,9 @@ public class SingleUserTests extends ApiTestBase {
                         .body()
                         .asString()
         );
-        step("Check response body is empty", () -> {
+        step("Проверяем, что тело ответа - пустое", () -> {
             assertThat(responseBody)
-                    .as("Response body should be empty JSON: {}")
+                    .as("Тело ответа должно быть пустым JSON: {}")
                     .isEqualTo("{}");
         });
     }

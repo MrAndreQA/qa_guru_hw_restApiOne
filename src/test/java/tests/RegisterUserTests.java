@@ -7,14 +7,13 @@ import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import static specs.BaseSpecRestApi.requestSpec;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.BaseSpecRestApi.responseSpec;
 
-@DisplayName("Reqres.in - регистрация пользователя")
+@DisplayName("ReqresIn - Тесты на регистрацию пользователя")
 @Tag("reqres_in")
 @Feature("Reqres.in тесты: Регистрация нового пользователя")
 @Story("Тестирование api сайта: Reqres.in")
@@ -25,13 +24,13 @@ public class RegisterUserTests extends ApiTestBase {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @DisplayName("Post - Single user: Успешная регистрация нового пользователя")
+    @DisplayName("Метод Post: Успешная регистрация нового пользователя")
     void successfulRegisterWithSpecsTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
         registerData.setEmail(USER_EMAIL);
         registerData.setPassword(USER_PASSWORD);
 
-        RegisterResponseModel response = step("Make request", ()->
+        RegisterResponseModel response = step("Отправляем запрос", ()->
                 given(requestSpec)
                         .body(registerData)
 
@@ -42,56 +41,56 @@ public class RegisterUserTests extends ApiTestBase {
                         .spec(responseSpec(200))
                         .extract().as(RegisterResponseModel.class));
 
-        step("Check response", () -> {
+        step("Проверяем ответ", () -> {
             String token = response.getToken();
             assertThat(token)
-                    .as("Token should not be null")
+                    .as("Token не должен быть null")
                     .isNotNull()
-                    .as("Token should not be blank")
+                    .as("Token не должен быть пустым")
                     .isNotBlank()
-                    .as("Token length should be >= %d", minTokenLength)
+                    .as("Длина токена должна быть >= %d", minTokenLength)
                     .hasSizeGreaterThanOrEqualTo(minTokenLength)
-                    .as("Token should contain only alphanumeric characters")
+                    .as("Token должен содержать только буквенно-цифровые символы")
                     .matches("^[a-zA-Z0-9]+$");
         });
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Post - Single user: Попытка регистрации пользователя - без указания пароля")
+    @DisplayName("Метод Post: Попытка регистрации пользователя - без указания пароля")
     void missingPasswordRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
         registerData.setEmail(USER_EMAIL);
-        MissingPasswordInRegisterModel response = step("Make request", () ->
+        MissingPasswordInRegisterModel response = step("Отправляем запрос", () ->
                 given(requestSpec)
                         .body(registerData)
                         .post(REGISTER_ENDPOINT)
                         .then()
                         .spec(responseSpec(400))
                         .extract().as(MissingPasswordInRegisterModel.class));
-        step("Check response", () ->
+        step("Проверяем ответ", () ->
                 assertThat(response.getError())
-                        .as("Check error message for missing password")
+                        .as("Проверьте сообщение об ошибке при отсутствии пароля")
                         .isEqualTo("Missing password")
         );
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Post - Single user: Попытка регистрации пользователя - без указания email")
+    @DisplayName("Метод Post: Попытка регистрации пользователя - без указания email")
     void missingEmailRegisterTest() {
         RegisterBodyModel registerData = new RegisterBodyModel();
         registerData.setPassword(USER_EMAIL);
-        MissingPasswordInRegisterModel response = step("Make request", () ->
+        MissingPasswordInRegisterModel response = step("Отправляем запрос", () ->
                 given(requestSpec)
                         .body(registerData)
                         .post(REGISTER_ENDPOINT)
                         .then()
                         .spec(responseSpec(400))
                         .extract().as(MissingPasswordInRegisterModel.class));
-        step("Check response", () ->
+        step("Проверяем ответ", () ->
                 assertThat(response.getError())
-                        .as("Check error message for missing email")
+                        .as("Проверьте сообщение об ошибке при отсутствии email")
                         .isEqualTo("Missing email or username")
         );
     }

@@ -20,7 +20,6 @@ public class ApiTestBase {
     protected static final String USER_EMAIL = apiConfig.userEmail();
     protected static final String USER_PASSWORD = apiConfig.userPassword();
 
-
     @BeforeAll
     static void beforeAll() {
         RestAssured.baseURI = ApiProvider.getApiConfig().baseApiUri();
